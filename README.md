@@ -57,5 +57,57 @@ create azure vmss with existing VHD and setup auto scale with CPU, and set NAT r
 			 }
 			}
           },      
+```
+3) NAT rules for RDP:
+```
+"inboundNatPools": [
+          {
+            "name": "[variables('natPoolName')]",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('frontEndIPConfigID')]"
+              },
+              "protocol": "tcp",
+              "frontendPortRangeStart": "[variables('natStartPort')]",
+              "frontendPortRangeEnd": "[variables('natEndPort')]",
+              "backendPort": "[variables('natBackendPort')]"
+            }
+          }
+        ],
+```
+4) Load balance rules for IIS (port 80)
+```
+"loadBalancingRules": [
+          {
+            "name": "weblb",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('lbFEIPConfigID')]"
+              },
+              "backendAddressPool": {
+                "id": "[variables('lbBEAddressPoolID')]"
+              },
+              "probe": {
+                "id": "[variables('lbWebProbeID')]"
+              },
+              "protocol": "tcp",
+              "frontendPort": "[parameters('frontEndLBPort')]",
+              "backendPort": "[parameters('backEndLBPort')]",
+              "enableFloatingIP": false
+            }
+          }
+        ],
+		"probes": [
+          {
+            "name": "[variables('lbWebProbeName')]",
+            "properties": {
+              "protocol": "Http",
+              "port": "[parameters('backEndLBPort')]",
+              "intervalInSeconds": "[parameters('probeIntervalInSeconds')]",
+              "numberOfProbes": "[parameters('numberOfProbes')]",
+              "requestPath": "[parameters('probeRequestPath')]"
+            }
+          }
+        ]
+```
 
-                
