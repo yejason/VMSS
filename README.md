@@ -3,16 +3,9 @@ create azure vmss with existing VHD and setup auto scale with CPU, and set NAT r
 
 
 
-#in this template, we should use VHD's uri:
-"sourceImageVhdUri": {
-			"type": "string",
-			"metadata": {
-				"description": "The source of the blob containing the custom image"
-			}
-		},
     
-# auto scale this VMss with CPU usage:
-
+1) Auto scale this VMss with CPU usage:
+```
 "rules": [
               {
                 "metricTrigger": {
