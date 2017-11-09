@@ -39,5 +39,23 @@ create azure vmss with existing VHD and setup auto scale with CPU, and set NAT r
                   "threshold": 30.0
                 },
                 
-                
+  2) Use VHD uri to create VMSS:
+  ```
+  "sourceImageVhdUri": {
+			"type": "string",
+			"metadata": {
+				"description": "The source of the blob containing the custom image"
+			}
+		},
+  "storageProfile": {
+            "osDisk": {
+			 "name": "vmssosdisk",
+             "createOption": "FromImage",
+			 "osType": "Windows",
+             "image": {
+			  "uri": "[parameters('sourceImageVhdUri')]"
+			 }
+			}
+          },      
+
                 
