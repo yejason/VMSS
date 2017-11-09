@@ -38,7 +38,7 @@ create azure vmss with existing VHD and setup auto scale with CPU, and set NAT r
                   "operator": "LessThan",
                   "threshold": 30.0
                 },
-                
+```                
   2) Use VHD uri to create VMSS:
   ```
   "sourceImageVhdUri": {
